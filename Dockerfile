@@ -5,6 +5,7 @@ COPY . /HomeMusic
 WORKDIR /HomeMusic
 
 RUN pip3 install -r requirements.txt
+RUN apt update
 RUN apt -y install ffmpeg zip
 
 CMD ["python3", "app.py"]

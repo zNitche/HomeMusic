@@ -22,7 +22,7 @@ def save_to_json(users):
         accounts.write(json.dumps(users, indent=4))
 
 
-def add_user(user_name, password, can_upload, can_delete, have_private_space, private_space_size, is_admin):
+def add_user(user_name, password):
 
     if user_name in load_users():
         return 0

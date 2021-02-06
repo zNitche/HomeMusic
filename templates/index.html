@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <script src="{{ url_for('static', filename='main.js') }}"></script>
+
+        <title>HomeMusic</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="navbar">
+                <span class="main-title">HomeMusic</span>
+                <form action="/logout" method="POST">
+                    <button class="logout-button" type="submit">Logout</button>
+                </form>
+            </div>
+            <div class="main-container">
+                <form action="/main/get_music" method="POST">
+                    <div class="search-bar">
+                        <input type="text" name="content" placeholder="Music URL (Could be many seperated by |)"/>
+                        <button type="submit">Get!</button>
+                    </div>
+                </form>
+            </div>
+            <div class="footer">
+                Powered by Flask & Youtube_DL
+            </div>
+        </div>
+    </body>
+</html>

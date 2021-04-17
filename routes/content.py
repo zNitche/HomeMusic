@@ -29,35 +29,39 @@ def get_music():
         os.system(f"rm -rf {FILES_LOCATION}{user_name}/{dir}")
 
     music = request.form["content"]
-    music_list = music.split("|")
 
-    today = date.today()
-    hour = datetime.now()
-    hour = hour.strftime("%H:%M:%S")
-    today = today.strftime("%d:%m:%Y")
+    if music != "":
+        music_list = music.split("|")
 
-    dir_name = f"{today}_{hour}"
-    dir_path = f"{FILES_LOCATION}{user_name}/{dir_name}"
+        today = date.today()
+        hour = datetime.now()
+        hour = hour.strftime("%H:%M:%S")
+        today = today.strftime("%d:%m:%Y")
 
-    if os.path.exists(dir_path):
-        os.remove(dir_path)
+        dir_name = f"{today}_{hour}"
+        dir_path = f"{FILES_LOCATION}{user_name}/{dir_name}"
 
-    os.mkdir(dir_path)
+        if os.path.exists(dir_path):
+            os.remove(dir_path)
 
-    ydl_opts = {
-        "format": "bestaudio/best",
-        "postprocessors": [{
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "mp3",
-            "preferredquality": "192",
-        }],
-        "outtmpl": f"{dir_path}/%(title)s.%(ext)s",
-    }
+        os.mkdir(dir_path)
 
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download(music_list)
+        ydl_opts = {
+            "format": "bestaudio/best",
+            "postprocessors": [{
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "mp3",
+                "preferredquality": "192",
+            }],
+            "outtmpl": f"{dir_path}/%(title)s.%(ext)s",
+        }
 
-    return redirect(url_for("content.download", dir=dir_name))
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download(music_list)
+
+        return redirect(url_for("content.download", dir=dir_name))
+    else:
+        return redirect(url_for("content.home"))
 
 
 @content_.route("/main/download/<dir>", methods=["GET"])

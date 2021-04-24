@@ -77,8 +77,6 @@ def main():
     choice = int(input("> "))
 
     if choice == 1:
-        private_space_size = 0
-
         os.system("clear")
         print("---Add user---")
 

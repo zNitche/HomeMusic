@@ -73,6 +73,8 @@ def get_music():
         dir_name = f"{today}_{hour}"
         dir_path = f"{FILES_LOCATION}{user_name}/{dir_name}"
 
+        timestamp = str(timestamp).replace(" ", "_")
+
         log_path = os.path.join(LOG_FILES_LOCATION, user_name)
         log_path = os.path.join(log_path, f"{timestamp}.json")
 

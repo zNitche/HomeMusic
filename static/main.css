@@ -102,6 +102,13 @@ input.login-form-input {
     align-items: center;
 }
 
+.processes-container {
+    padding: 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .search-bar input {
     width: 250px;
     height: 20px;
@@ -122,4 +129,35 @@ input.login-form-input {
 
 .logout-button:hover {
     background-color: #313131;
+}
+
+.logout-button a {
+    text-decoration: none;
+}
+
+.logs-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+
+.log-container {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.process-button {
+    padding: 5px;
+    color: #0035ff;
+}
+
+.details-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+
+.details-container form {
+    display: flex;
+    justify-content: center;
 }

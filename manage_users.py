@@ -34,6 +34,7 @@ def add_user(user_name, password):
 
     save_to_json(users)
     os.mkdir(f"{Config.FILES_LOCATION}{user_name}")
+    os.mkdir(f"{Config.LOG_FILES_LOCATION}{user_name}")
 
     return 1
 

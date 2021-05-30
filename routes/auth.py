@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint
 import flask_login
-from users import User
+from users import user
 from users import users_accounts as users
 from passlib.hash import sha256_crypt
 
@@ -28,10 +28,10 @@ def check():
             username = request.form["user_name"]
 
             if sha256_crypt.verify(request.form["password"], users_accounts[username]["password"]):
-                user = User.User()
-                user.id = username
+                user_model = user.User()
+                user_model.id = username
 
-                flask_login.login_user(user)
+                flask_login.login_user(user_model)
 
                 return redirect(url_for("content.home"))
             else:

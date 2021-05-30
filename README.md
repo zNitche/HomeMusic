@@ -15,4 +15,6 @@ sudo docker run --name=homemusic -d -v <path_to_files_storage> -p 8080:8080 home
 ### Usage
 1. Login
 2. Enter yt link/links (if many seperate them with `|`)
-3. Press `Get!` button, when whole process will be finished you will be prompted to choose where the `.zip` file will be saved to
+3. Press `Get!` button.
+4. Wait until process to finish (or cancel it)
+5. Press `Download` button to download `.zip` file containing your music

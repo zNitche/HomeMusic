@@ -1,6 +1,6 @@
 from flask import Flask
 import flask_login
-from users import User
+from users import user
 from users import users_accounts
 
 
@@ -18,9 +18,9 @@ def create_app():
         if username not in users:
             return
 
-        user = User.User()
-        user.id = username
-        return user
+        user_model = user.User()
+        user_model.id = username
+        return user_model
 
     with app.app_context():
         from routes import content, auth

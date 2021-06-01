@@ -23,6 +23,28 @@
             </div>
             <div class="processes-container">
                 <div class="logs-container">
+                    <p>
+                        Running processes
+                    </p>
+                    {% if running_log_files|length == 0 %}
+                        <div class="log-container">
+                            <p>
+                                No running processes to show
+                            </p>
+                        </div>
+                    {% else %}
+                        {% for log in running_log_files %}
+                            <div class="log-container">
+                                <a href="{{ url_for( 'content.process_details', log_name=log ) }}">
+                                    {{ log }}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <p>
+                        Finished processes
+                    </p>
                     {% if log_files|length == 0 %}
                         <div class="log-container">
                             <p>

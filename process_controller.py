@@ -6,6 +6,24 @@ import json
 import youtube_dl
 
 
+def get_processes(logs_path):
+    finished_processes = []
+    running_processes = []
+
+    for log in os.listdir(logs_path):
+        with open(os.path.join(logs_path, log), "r") as log_file:
+            log_data = json.loads(log_file.read())
+
+            log = log.split(".")[0]
+
+            if log_data["is_running"]:
+                running_processes.append(log)
+            else:
+                finished_processes.append(log)
+
+    return running_processes, finished_processes
+
+
 def stop_process(log_path, out_path):
     with open(log_path, "r") as file:
         log_data = json.loads(file.read())

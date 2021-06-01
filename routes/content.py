@@ -27,9 +27,11 @@ def home():
 def processes():
     user_name = flask_login.current_user.id
 
-    log_files = list(reversed(sorted(os.listdir(os.path.join(LOG_FILES_LOCATION, user_name)))))
+    running_processes, finished_processes = process_controller.get_processes(os.path.join(LOG_FILES_LOCATION, user_name))
+    running_processes = list(reversed(sorted(running_processes)))
+    finished_processes = list(reversed(sorted(finished_processes)))
 
-    return render_template("processes.html", log_files=log_files)
+    return render_template("processes.html", log_files=finished_processes, running_log_files=running_processes)
 
 
 @content_.route("/process_details/<log_name>")
@@ -74,6 +76,7 @@ def get_music():
         dir_path = f"{FILES_LOCATION}{user_name}/{dir_name}"
 
         timestamp = str(timestamp).replace(" ", "_")
+        timestamp = str(timestamp).replace(".", "_")
 
         log_path = os.path.join(LOG_FILES_LOCATION, user_name)
         log_path = os.path.join(log_path, f"{timestamp}.json")

@@ -8,4 +8,4 @@ RUN pip3 install -r requirements.txt
 RUN apt update
 RUN apt -y install ffmpeg zip
 
-CMD ["python3", "app.py"]
+CMD gunicorn -c gunicorn.conf.py app:app --preload

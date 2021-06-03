@@ -2,11 +2,13 @@ from flask import Flask
 import flask_login
 from users import user
 from users import users_accounts
+import os
 
 
 def create_app():
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object('config.Config')
+    app.secret_key = os.urandom(25)
 
     login_manager = flask_login.LoginManager()
     login_manager.init_app(app)

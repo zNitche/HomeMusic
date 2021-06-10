@@ -12,7 +12,7 @@
         <div class="container">
             <div class="navbar">
                 <span class="main-title">HomeMusic</span>
-                <form action="/logout" method="POST">
+                <form action="{{ url_for( 'auth.logout' ) }}" method="POST">
                     <button class="logout-button" type="button">
                         <a href="{{ url_for( 'content.home' ) }}">
                             Home
@@ -28,14 +28,14 @@
                     <p>Music links: {{ log_data["music_links"] }}</p>
                     <p>PID: {{ log_data["process_pid"] }}</p>
                     <p>Is process running: {{ log_data["is_running"] }}</p>
-                    <p>Was process cancelled: {{ log_data["was_canceled"] }}</p>
+                    <p>Was process canceled: {{ log_data["was_canceled"] }}</p>
 
                     {% if log_data["is_running"] %}
-                    <form action="{{ url_for('content.cancel_process', timestamp=log_data['timestamp']) }}" method="POST">
+                    <form action="{{ url_for('processes.cancel_process', timestamp=log_data['timestamp']) }}" method="POST">
                         <button class="process-button" type="submit">Cancel</button>
                     </form>
                     {% elif not log_data["is_running"] and not log_data["was_canceled"] %}
-                    <form action="{{ url_for('content.download', dir=log_data['dir_path']) }}" method="POST">
+                    <form action="{{ url_for('downloads.download', dir=log_data['dir_path']) }}" method="POST">
                         <button class="process-button" type="submit">Download</button>
                     </form>
                     {% endif %}

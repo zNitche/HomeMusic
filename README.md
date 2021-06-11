@@ -8,9 +8,9 @@
 3. Build docker image `sudo docker build -t homemusic .`
 4. Run docker container
 ```
-sudo docker run --name=homemusic -d 
--v <path_to_files_storage> 
--v <path_to_logs_storage>
+sudo docker run --name=homemusic -d \
+-v <path_to_logs_storage_on_host>:/HomeMusic/logs \
+-v <path_to_files_storage_on_host>:/HomeMusic/files \
 -p 8080:8080 homemusic
 ```
 5. Make docker container restart after reboot `sudo docker update --restart unless-stopped homemusic`

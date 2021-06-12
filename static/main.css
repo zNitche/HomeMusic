@@ -94,6 +94,10 @@ input.login-form-input {
     background-color: #272727;
 }
 
+.navbar a {
+    text-decoration: none;
+}
+
 .main-container {
     height: 100%;
     padding: 0 5px;
@@ -129,10 +133,6 @@ input.login-form-input {
 
 .logout-button:hover {
     background-color: #313131;
-}
-
-.logout-button a {
-    text-decoration: none;
 }
 
 .logs-container {

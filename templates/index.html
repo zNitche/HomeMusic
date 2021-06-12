@@ -13,11 +13,11 @@
             <div class="navbar">
                 <span class="main-title">HomeMusic</span>
                 <form action="{{ url_for( 'auth.logout' ) }}" method="POST">
-                    <button class="logout-button" type="button">
-                        <a href="{{ url_for( 'content.processes' ) }}">
+                    <a href="{{ url_for( 'content.processes' ) }}">
+                        <button class="logout-button" type="button">
                             Processes
-                        </a>
-                    </button>
+                        </button>
+                    </a>
                     <button class="logout-button" type="submit">Logout</button>
                 </form>
             </div>

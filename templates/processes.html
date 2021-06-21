@@ -1,70 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-        <script src="{{ url_for('static', filename='main.js') }}"></script>
-
-        <title>HomeMusic</title>
-    </head>
-    <body>
-        <div class="container">
-            <div class="navbar">
-                <span class="main-title">HomeMusic</span>
-                <form action="{{ url_for( 'auth.logout' ) }}" method="POST">
-                    <a href="{{ url_for( 'content.home' ) }}">
-                        <button class="logout-button" type="button">
-                            Home
-                        </button>
-                    </a>
-                    <button class="logout-button" type="submit">Logout</button>
-                </form>
-            </div>
-            <div class="processes-container">
-                <div class="logs-container">
+{% extends "base.html" %}
+{% block content %}
+    <div class="processes-container">
+        <div class="logs-container">
+            <p>
+                Running processes
+            </p>
+            {% if running_log_files|length == 0 %}
+                <div class="log-container">
                     <p>
-                        Running processes
+                        No running processes to show
                     </p>
-                    {% if running_log_files|length == 0 %}
-                        <div class="log-container">
-                            <p>
-                                No running processes to show
-                            </p>
-                        </div>
-                    {% else %}
-                        {% for log in running_log_files %}
-                            <div class="log-container">
-                                <a href="{{ url_for( 'content.process_details', log_name=log ) }}">
-                                    {{ log }}
-                                </a>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-
-                    <p>
-                        Finished processes
-                    </p>
-                    {% if log_files|length == 0 %}
-                        <div class="log-container">
-                            <p>
-                                No logs to show
-                            </p>
-                        </div>
-                    {% else %}
-                        {% for log in log_files %}
-                            <div class="log-container">
-                                <a href="{{ url_for( 'content.process_details', log_name=log ) }}">
-                                    {{ log }}
-                                </a>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
                 </div>
-            </div>
-            <div class="footer">
-                Powered by Flask & Youtube_DL
-            </div>
+            {% else %}
+                {% for log in running_log_files %}
+                    <div class="log-container">
+                        <a href="{{ url_for( 'content.process_details', log_name=log ) }}">
+                            {{ log }}
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <p>
+                Finished processes
+            </p>
+            {% if log_files|length == 0 %}
+                <div class="log-container">
+                    <p>
+                        No logs to show
+                    </p>
+                </div>
+            {% else %}
+                {% for log in log_files %}
+                    <div class="log-container">
+                        <a href="{{ url_for( 'content.process_details', log_name=log ) }}">
+                            {{ log }}
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
-    </body>
-</html>
+    </div>
+{% endblock %}

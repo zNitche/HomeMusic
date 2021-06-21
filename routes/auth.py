@@ -10,11 +10,13 @@ auth_ = Blueprint("auth", __name__, template_folder='template', static_folder='s
 
 @auth_.route("/auth/login")
 def login():
-    if flask_login.current_user.is_authenticated:
+    is_user_authenticated = flask_login.current_user.is_authenticated
+
+    if is_user_authenticated:
         return redirect(url_for("content.home"))
     else:
         message = ""
-        return render_template("login.html", message=message)
+        return render_template("login.html", message=message, is_user_authenticated=is_user_authenticated)
 
 
 @auth_.route("/auth/login/check", methods=["POST"])

@@ -16,7 +16,7 @@ def login():
         return redirect(url_for("content.home"))
     else:
         message = ""
-        return render_template("login.html", message=message, is_user_authenticated=is_user_authenticated)
+        return render_template("login.html", message=message)
 
 
 @auth_.route("/auth/login/check", methods=["POST"])

@@ -1,16 +1,27 @@
-{% extends "base.html" %}
-{% block content %}
-    <div class="login-container">
-        <div class="login-content">
-            <p class="login-title">HomeMusic</p>
-            <form method="POST" action="{{ url_for( 'auth.check' ) }}">
-                <input class="login-form-input" type="text" id="login" name="user_name" placeholder="login" />
-                <input class="login-form-input" type="password" id="password" name="password" placeholder="password" />
-                <button class="login-button" type="submit">Log in</button>
-            </form>
-            <div class="login-message">
-                {{message}}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+        <title>HomeMusic</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="login-container">
+                <div class="login-content">
+                    <p class="login-title">HomeMusic</p>
+                    <form method="POST" action="{{ url_for( 'auth.check' ) }}">
+                        <input class="login-form-input" type="text" id="login" name="user_name" placeholder="login" />
+                        <input class="login-form-input" type="password" id="password" name="password" placeholder="password" />
+                        <button class="login-button" type="submit">Log in</button>
+                    </form>
+                    <div class="login-message">
+                        {{message}}
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-{% endblock %}
+    </body>
+</html>

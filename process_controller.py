@@ -54,6 +54,7 @@ class Process:
         self.was_cancelled = False
         self.log_path = log_path
         self.dir_path = dir_path
+        self.downloaded_files = []
 
     def start_process(self):
         if os.path.exists(self.dir_path):
@@ -83,6 +84,8 @@ class Process:
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download(self.music_links)
 
+        self.downloaded_files = os.listdir(self.dir_path)
+
         os.system(f"zip -r -j {self.dir_path}.zip {self.dir_path}")
         os.system(f"rm -rf {self.dir_path}")
 
@@ -103,6 +106,7 @@ class Process:
             log_data["timestamp"] = self.timestamp
             log_data["dir_path"] = self.dir_path.split("/")[-1]
             log_data["music_links"] = self.music_links
+            log_data["music_names"] = self.downloaded_files
             log_data["process_pid"] = self.process_pid
             log_data["is_running"] = self.is_running
             log_data["was_canceled"] = self.was_cancelled
@@ -115,6 +119,7 @@ class Process:
             log_data["process_pid"] = self.process_pid
             log_data["is_running"] = self.is_running
             log_data["was_canceled"] = self.was_cancelled
+            log_data["music_names"] = self.downloaded_files
 
             with open(self.log_path, "w") as file:
                 file.write(json.dumps(log_data, indent=4))

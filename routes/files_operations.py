@@ -24,10 +24,12 @@ def download(dir):
 def delete(timestamp, dir):
     user_name = flask_login.current_user.id
 
-    path_zip_to_file = f"{FILES_LOCATION}{user_name}/{dir}.zip"
+    path_to_zip_file = f"{FILES_LOCATION}{user_name}/{dir}.zip"
     path_to_report_file = f"{LOG_FILES_LOCATION}{user_name}/{timestamp}.json"
 
-    os.remove(path_zip_to_file)
+    if os.path.exists(path_to_zip_file):
+        os.remove(path_to_zip_file)
+
     os.remove(path_to_report_file)
 
     return redirect(url_for("content.processes"))

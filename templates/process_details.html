@@ -11,16 +11,18 @@
             <p>Was process canceled: {{ log_data["was_canceled"] }}</p>
 
             {% if log_data["is_running"] %}
-            <form action="{{ url_for('processes.cancel_process', timestamp=log_data['timestamp']) }}" method="POST">
-                <button class="process-button" type="submit">Cancel</button>
-            </form>
-            {% elif not log_data["is_running"] and not log_data["was_canceled"] %}
-            <form action="{{ url_for('files_operations.download', dir=log_data['dir_path']) }}" method="POST">
-                <button class="process-button" type="submit">Download</button>
-            </form>
-            <form action="{{ url_for('files_operations.delete', dir=log_data['dir_path'], timestamp=log_data['timestamp']) }}" method="POST">
-                <button class="process-button" type="submit">Delete</button>
-            </form>
+                <form action="{{ url_for('processes.cancel_process', timestamp=log_data['timestamp']) }}" method="POST">
+                    <button class="process-button" type="submit">Cancel</button>
+                </form>
+            {% elif not log_data["is_running"] %}
+                {% if not log_data["was_canceled"] %}
+                    <form action="{{ url_for('files_operations.download', dir=log_data['dir_path']) }}" method="POST">
+                        <button class="process-button" type="submit">Download</button>
+                    </form>
+                {% endif %}
+                <form action="{{ url_for('files_operations.delete', dir=log_data['dir_path'], timestamp=log_data['timestamp']) }}" method="POST">
+                    <button class="process-button" type="submit">Delete</button>
+                </form>
             {% endif %}
         </div>
     </div>

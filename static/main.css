@@ -164,4 +164,5 @@ input.login-form-input {
 .details-container form {
     display: flex;
     justify-content: center;
+    margin-top: 10px;
 }

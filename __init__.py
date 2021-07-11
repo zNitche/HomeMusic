@@ -25,12 +25,12 @@ def create_app():
         return user_model
 
     with app.app_context():
-        from routes import content, auth, errors, downloads, processes
+        from routes import content, auth, errors, files_operations, processes
 
         app.register_blueprint(content.content_)
         app.register_blueprint(auth.auth_)
         app.register_blueprint(errors.errors_)
-        app.register_blueprint(downloads.downloads_)
+        app.register_blueprint(files_operations.files_operations_)
         app.register_blueprint(processes.processes_)
 
         return app

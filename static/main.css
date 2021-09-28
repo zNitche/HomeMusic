@@ -19,7 +19,7 @@ body {
     flex-direction: column;
 }
 
-.login-container {
+.mid-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,7 +29,7 @@ body {
     text-align: center;
 }
 
-.login-container .login-content {
+.mid-container .login-content {
     display: flex;
     flex-wrap: wrap;
     max-width: 300px;

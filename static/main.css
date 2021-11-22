@@ -65,7 +65,18 @@ input.login-form-input {
     width: 50%;
     margin-top: 10px;
     padding: 5px;
-    border-radius: 10px;
+    border-radius: 15px;
+    border: none;
+}
+
+.search-button {
+    background-color: #1448a7;
+    color: white;
+    width: 50%;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 15px;
+    border: none;
 }
 
 .navbar {
@@ -97,6 +108,7 @@ input.login-form-input {
     border-radius: 10px;
     color: #ffffff;
     background-color: #272727;
+    border: none;
 }
 
 .navbar a {
@@ -125,6 +137,7 @@ input.login-form-input {
 .search-bar {
     flex-direction: column;
     display: flex;
+    align-items: center;
 }
 
 .search-bar input {
@@ -142,6 +155,10 @@ input.login-form-input {
 }
 
 .login-button:hover {
+    background-color: #7485d6;
+}
+
+.search-button:hover {
     background-color: #7485d6;
 }
 

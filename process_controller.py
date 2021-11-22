@@ -35,7 +35,10 @@ def stop_process(log_path, out_path):
         log_data["was_canceled"] = True
         log_data["process_pid"] = None
 
-        os.kill(pid, signal.SIGTERM)
+        try:
+            os.kill(pid, signal.SIGTERM)
+        except Exception as e:
+            pass
 
         if os.path.exists(os.path.join(out_path, dir_path)):
             shutil.rmtree(os.path.join(out_path, dir_path))

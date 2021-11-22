@@ -2,7 +2,7 @@
 {% block content %}
     <div class="processes-container">
         <div class="logs-container">
-            <p>
+            <p class="log-title">
                 Running processes
             </p>
             {% if running_log_files|length == 0 %}
@@ -15,13 +15,15 @@
                 {% for log in running_log_files %}
                     <div class="log-container">
                         <a href="{{ url_for( 'content.process_details', log_name=log ) }}">
-                            {{ log }}
+                            <button class="log-button">
+                                {{ log }}
+                            </button>
                         </a>
                     </div>
                 {% endfor %}
             {% endif %}
 
-            <p>
+            <p class="log-title">
                 Finished processes
             </p>
             {% if log_files|length == 0 %}
@@ -34,7 +36,9 @@
                 {% for log in log_files %}
                     <div class="log-container">
                         <a href="{{ url_for( 'content.process_details', log_name=log ) }}">
-                            {{ log }}
+                            <button class="log-button">
+                                {{ log }}
+                            </button>
                         </a>
                     </div>
                 {% endfor %}

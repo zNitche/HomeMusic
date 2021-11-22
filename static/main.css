@@ -187,6 +187,7 @@ input.login-form-input {
     background-color: #808080;
     padding: 5px;
     width: 100%;
+    border-radius: 5px;
 }
 
 .log-button {
@@ -197,6 +198,7 @@ input.login-form-input {
     text-decoration: none;
     color: #ffffff;
     padding: 15px;
+    border-radius: 10px;
 }
 
 .log-button:hover {

@@ -1,6 +1,13 @@
-{% extends "base.html" %}
+{% extends "nonauth_base.html" %}
 {% block content %}
-    <div class="main-container">
+    <div class="mid-container">
         <p>An error occurred: {{message}}</p>
+        <br />
+        <p>
+             Go back to main page:
+                <a href="{{ url_for( 'content.home') }}">
+                    Click
+                </a>
+        </p>
     </div>
 {% endblock %}

@@ -191,14 +191,16 @@ input.login-form-input {
 
 .log-button {
     width: 100%;
-    background-color: #c2c2c2;
+    background-color: #404040;
     border: none;
-    color: white;
-    padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+    color: #ffffff;
+    padding: 15px;
+}
+
+.log-button:hover {
+    background-color: #636363;
 }
 
 .process-button {

@@ -209,9 +209,14 @@ input.login-form-input {
 }
 
 .details-container {
+    background-color: #404040;
     display: flex;
     flex-direction: column;
     margin-bottom: 50px;
+    margin-left: 5px;
+    padding: 15px;
+    margin-right: 5px;
+    border-radius: 10px;
 }
 
 .details-container form {

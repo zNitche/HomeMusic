@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="main-container">
+    <div class="mid-container">
         <div class="details-container">
-            <p>Timestamp: {{ log_data["timestamp"] }}</p>
-            <p>Directory Name: {{ log_data["dir_path"] }}</p>
-            <p>Music links: {{ log_data["music_links"] }}</p>
-            <p>Music names: {{ log_data["music_names"] }}</p>
-            <p>PID: {{ log_data["process_pid"] }}</p>
-            <p>Is process running: {{ log_data["is_running"] }}</p>
-            <p>Was process canceled: {{ log_data["was_canceled"] }}</p>
+            <p><b>Timestamp</b>: {{ log_data["timestamp"] }}</p>
+            <p><b>Directory Name:</b> {{ log_data["dir_path"] }}</p>
+            <p><b>Music links:</b> {{ log_data["music_links"] }}</p>
+            <p><b>Music names:</b> {{ log_data["music_names"] }}</p>
+            <p><b>PID:</b> {{ log_data["process_pid"] }}</p>
+            <p><b>Is process running:</b> {{ log_data["is_running"] }}</p>
+            <p><b>Was process canceled:</b> {{ log_data["was_canceled"] }}</p>
 
             {% if log_data["is_running"] %}
                 <form action="{{ url_for('processes.cancel_process', timestamp=log_data['timestamp']) }}" method="POST">

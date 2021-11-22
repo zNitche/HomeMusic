@@ -3,8 +3,7 @@ from flask import current_app as app
 import flask_login
 import os
 import json
-import process_controller
-
+from utils import process_controller
 
 FILES_LOCATION = app.config["FILES_LOCATION"]
 LOG_FILES_LOCATION = app.config["LOG_FILES_LOCATION"]

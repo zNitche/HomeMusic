@@ -16,7 +16,7 @@ def download(dir):
     user_name = flask_login.current_user.id
 
     file_name = f"{dir}.zip"
-    file_path = os.path.join(os.path.join(FILES_LOCATION, user_name), file_name)
+    file_path = os.path.join(FILES_LOCATION, user_name, file_name)
 
     return send_file(file_path, as_attachment=False, attachment_filename=file_name, cache_timeout=0)
 
@@ -26,8 +26,8 @@ def download(dir):
 def delete(timestamp, dir):
     user_name = flask_login.current_user.id
 
-    path_to_zip_file = os.path.join(os.path.join(FILES_LOCATION, user_name), f"{dir}.zip")
-    path_to_report_file = os.path.join(os.path.join(LOG_FILES_LOCATION, user_name), f"{timestamp}.json")
+    path_to_zip_file = os.path.join(FILES_LOCATION, user_name, f"{dir}.zip")
+    path_to_report_file = os.path.join(LOG_FILES_LOCATION, user_name, f"{timestamp}.json")
 
     if os.path.exists(path_to_zip_file):
         os.remove(path_to_zip_file)

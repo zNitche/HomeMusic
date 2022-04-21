@@ -18,7 +18,7 @@ processes_ = Blueprint("processes", __name__, template_folder='template', static
 def cancel_process(timestamp):
     user_name = flask_login.current_user.id
 
-    log_path = os.path.join(LOG_FILES_LOCATION, os.path.join(user_name, f"{timestamp}.json"))
+    log_path = os.path.join(LOG_FILES_LOCATION, user_name, f"{timestamp}.json")
 
     process_controller.stop_process(log_path, os.path.join(FILES_LOCATION, user_name))
 
@@ -40,7 +40,7 @@ def get_music():
         hour = timestamp.strftime("%H:%M:%S")
         today = today.strftime("%d:%m:%Y")
 
-        dir_path = os.path.join(os.path.join(FILES_LOCATION, user_name), f"{today}_{hour}")
+        dir_path = os.path.join(FILES_LOCATION, user_name, f"{today}_{hour}")
 
         timestamp = str(timestamp).replace(" ", "_")
         timestamp = str(timestamp).replace(".", "_")

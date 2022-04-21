@@ -6,6 +6,7 @@ from datetime import date, datetime
 from utils import process_controller
 from utils.process import Process
 
+
 FILES_LOCATION = app.config["FILES_LOCATION"]
 LOG_FILES_LOCATION = app.config["LOG_FILES_LOCATION"]
 
@@ -21,7 +22,7 @@ def cancel_process(timestamp):
 
     process_controller.stop_process(log_path, os.path.join(FILES_LOCATION, user_name))
 
-    return redirect(url_for("content.process_details", log_name=f"{timestamp}"))
+    return redirect(url_for("content.process_details", log_name=timestamp))
 
 
 @processes_.route("/processes/get_music", methods=["POST"])
@@ -39,8 +40,7 @@ def get_music():
         hour = timestamp.strftime("%H:%M:%S")
         today = today.strftime("%d:%m:%Y")
 
-        dir_name = f"{today}_{hour}"
-        dir_path = os.path.join(f"{FILES_LOCATION}{user_name}", dir_name)
+        dir_path = os.path.join(os.path.join(FILES_LOCATION, user_name), f"{today}_{hour}")
 
         timestamp = str(timestamp).replace(" ", "_")
         timestamp = str(timestamp).replace(".", "_")
@@ -51,6 +51,7 @@ def get_music():
         download_process = Process(music_list, timestamp, log_path, dir_path)
         download_process.start_process()
 
-        return redirect(url_for("content.process_details", log_name=f"{timestamp}"))
+        return redirect(url_for("content.process_details", log_name=timestamp))
+
     else:
         return redirect(url_for("content.home"))

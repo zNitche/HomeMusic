@@ -5,6 +5,7 @@ import os
 import json
 from utils import process_controller
 
+
 FILES_LOCATION = app.config["FILES_LOCATION"]
 LOG_FILES_LOCATION = app.config["LOG_FILES_LOCATION"]
 
@@ -41,7 +42,7 @@ def process_details(log_name):
     user_name = flask_login.current_user.id
     is_user_authenticated = flask_login.current_user.is_authenticated
 
-    with open(os.path.join(f"{LOG_FILES_LOCATION}{user_name}", f"{log_name}.json")) as file:
+    with open(os.path.join(os.path.join(LOG_FILES_LOCATION, user_name), f"{log_name}.json")) as file:
         log_data = json.loads(file.read())
 
     return render_template("process_details.html", log_data=log_data,

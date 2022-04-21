@@ -2,6 +2,7 @@ import json
 from config import Config
 import os
 from passlib.hash import sha256_crypt
+import shutil
 
 
 def hash_password(plain_password):
@@ -11,14 +12,14 @@ def hash_password(plain_password):
 
 
 def load_users():
-    with open(f"{Config.CURRENT_DIR}/users/users.json", "r") as accounts:
+    with open(os.path.join(Config.CURRENT_DIR, "users", "users.json"), "r") as accounts:
         users = json.loads(accounts.read())
 
     return users
 
 
 def save_to_json(users):
-    with open(f"{Config.CURRENT_DIR}/users/users.json", "w") as accounts:
+    with open(os.path.join(Config.CURRENT_DIR, "users", "users.json"), "w") as accounts:
         accounts.write(json.dumps(users, indent=4))
 
 
@@ -28,13 +29,20 @@ def add_user(user_name, password):
         return 0
 
     users = load_users()
-    crypted_password = hash_password(password)
+    encrypted_password = hash_password(password)
 
-    users[user_name] = {"password": crypted_password}
+    users[user_name] = {"password": encrypted_password}
 
     save_to_json(users)
-    os.mkdir(f"{Config.FILES_LOCATION}{user_name}")
-    os.mkdir(f"{Config.LOG_FILES_LOCATION}{user_name}")
+
+    user_files_path = os.path.join(Config.FILES_LOCATION, user_name)
+    user_logs_path = os.path.join(Config.LOG_FILES_LOCATION, user_name)
+
+    if not os.path.exists(user_files_path):
+        os.mkdir(user_files_path)
+
+    if not os.path.exists(user_logs_path):
+        os.mkdir(user_logs_path)
 
     return 1
 
@@ -46,9 +54,17 @@ def delete_user(user_name):
         return 0
 
     del users[user_name]
-    os.system(f"rm -rf {Config.FILES_LOCATION}{user_name}")
 
     save_to_json(users)
+
+    user_files_path = os.path.join(Config.FILES_LOCATION, user_name)
+    user_logs_path = os.path.join(Config.LOG_FILES_LOCATION, user_name)
+
+    if os.path.exists(user_files_path):
+        shutil.rmtree(user_files_path)
+
+    if os.path.exists(user_logs_path):
+        shutil.rmtree(user_logs_path)
 
     return 1
 
@@ -68,7 +84,7 @@ def conv_to_bool(s):
 
 
 def main():
-    print("---HomeDrive---")
+    print("---HomeMusic---")
     print("Users Manager. Choose what do you want to do: ")
     print("1) Add new user")
     print("2) Delete user")

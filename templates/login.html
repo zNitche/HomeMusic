@@ -3,7 +3,7 @@
 <div class="mid-container">
     <div class="login-content">
         <p class="login-title">HomeMusic</p>
-        <form method="POST" action="{{ url_for( 'auth.check' ) }}">
+        <form method="POST" action="{{ url_for( 'auth.login' ) }}">
             <input class="login-form-input" type="text" id="login" name="user_name" placeholder="login" />
             <input class="login-form-input" type="password" id="password" name="password" placeholder="password" />
             <button class="login-button" type="submit">Log in</button>

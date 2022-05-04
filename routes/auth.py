@@ -8,21 +8,15 @@ from passlib.hash import sha256_crypt
 auth_ = Blueprint("auth", __name__, template_folder='template', static_folder='static')
 
 
-@auth_.route("/auth/login")
+@auth_.route("/auth/login", methods=["POST", "GET"])
 def login():
-    is_user_authenticated = flask_login.current_user.is_authenticated
+    if request.method == "GET":
+        if flask_login.current_user.is_authenticated:
+            return redirect(url_for("content.home"))
+        else:
+            message = ""
+            return render_template("login.html", message=message)
 
-    if is_user_authenticated:
-        return redirect(url_for("content.home"))
-    else:
-        message = ""
-        return render_template("login.html", message=message)
-
-
-@auth_.route("/auth/login/check", methods=["POST"])
-def check():
-    if flask_login.current_user.is_authenticated:
-        return redirect(url_for("content.home"))
     else:
         try:
             users_accounts = users.UsersAccounts.users

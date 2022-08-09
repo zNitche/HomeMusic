@@ -3,7 +3,7 @@ from flask import current_app as app
 import flask_login
 import os
 import json
-from utils import process_controller
+from home_music.utils import processes_utils
 
 
 FILES_LOCATION = app.config["FILES_LOCATION"]
@@ -28,7 +28,7 @@ def processes():
     user_name = flask_login.current_user.id
     is_user_authenticated = flask_login.current_user.is_authenticated
 
-    running_processes, finished_processes = process_controller.get_processes(os.path.join(LOG_FILES_LOCATION, user_name))
+    running_processes, finished_processes = processes_utils.get_processes(os.path.join(LOG_FILES_LOCATION, user_name))
     running_processes = list(reversed(sorted(running_processes)))
     finished_processes = list(reversed(sorted(finished_processes)))
 

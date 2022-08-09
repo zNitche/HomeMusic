@@ -1,7 +1,8 @@
-from __init__ import create_app
+from home_music import create_app
 
 
 app = create_app()
+
 
 if __name__ == "__main__":
     APP_PORT = app.config["APP_PORT"]

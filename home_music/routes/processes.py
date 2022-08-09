@@ -3,12 +3,13 @@ from flask import current_app as app
 import flask_login
 import os
 from datetime import date, datetime
-from utils import process_controller
-from utils.process import Process
+from home_music.utils import processes_utils
+from home_music.process import Process
 
 
 FILES_LOCATION = app.config["FILES_LOCATION"]
 LOG_FILES_LOCATION = app.config["LOG_FILES_LOCATION"]
+
 
 processes_ = Blueprint("processes", __name__, template_folder='template', static_folder='static')
 
@@ -20,7 +21,7 @@ def cancel_process(timestamp):
 
     log_path = os.path.join(LOG_FILES_LOCATION, user_name, f"{timestamp}.json")
 
-    process_controller.stop_process(log_path, os.path.join(FILES_LOCATION, user_name))
+    processes_utils.stop_process(log_path, os.path.join(FILES_LOCATION, user_name))
 
     return redirect(url_for("content.process_details", log_name=timestamp))
 

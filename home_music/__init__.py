@@ -1,7 +1,7 @@
 from flask import Flask
 import flask_login
-from users import user
-from users import users_accounts
+from home_music.users import user
+from home_music.users import users_accounts
 import os
 
 
@@ -25,7 +25,7 @@ def create_app():
         return user_model
 
     with app.app_context():
-        from routes import content, auth, errors, files_operations, processes
+        from home_music.routes import content, auth, errors, files_operations, processes
 
         app.register_blueprint(content.content_)
         app.register_blueprint(auth.auth_)

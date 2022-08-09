@@ -9,10 +9,11 @@ from home_music.utils import processes_utils
 FILES_LOCATION = app.config["FILES_LOCATION"]
 LOG_FILES_LOCATION = app.config["LOG_FILES_LOCATION"]
 
-content_ = Blueprint("content", __name__, template_folder='template', static_folder='static')
+
+content = Blueprint("content", __name__, template_folder='template', static_folder='static')
 
 
-@content_.route("/")
+@content.route("/")
 def home():
     is_user_authenticated = flask_login.current_user.is_authenticated
 
@@ -22,7 +23,7 @@ def home():
         return redirect(url_for("auth.login"))
 
 
-@content_.route("/processes")
+@content.route("/processes")
 @flask_login.login_required
 def processes():
     user_name = flask_login.current_user.id
@@ -36,7 +37,7 @@ def processes():
                            is_user_authenticated=is_user_authenticated)
 
 
-@content_.route("/process_details/<log_name>")
+@content.route("/process_details/<log_name>")
 @flask_login.login_required
 def process_details(log_name):
     user_name = flask_login.current_user.id

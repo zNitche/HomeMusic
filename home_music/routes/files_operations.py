@@ -7,10 +7,11 @@ import os
 FILES_LOCATION = app.config["FILES_LOCATION"]
 LOG_FILES_LOCATION = app.config["LOG_FILES_LOCATION"]
 
-files_operations_ = Blueprint("files_operations", __name__, template_folder='template', static_folder='static')
+
+files_operations = Blueprint("files_operations", __name__, template_folder='template', static_folder='static')
 
 
-@files_operations_.route("/files_operations/download/<dir>", methods=["GET", "POST"])
+@files_operations.route("/files_operations/download/<dir>", methods=["GET", "POST"])
 @flask_login.login_required
 def download(dir):
     user_name = flask_login.current_user.id
@@ -21,7 +22,7 @@ def download(dir):
     return send_file(file_path, as_attachment=False, attachment_filename=file_name, cache_timeout=0)
 
 
-@files_operations_.route("/files_operations/delete/<timestamp>&<dir>", methods=["POST"])
+@files_operations.route("/files_operations/delete/<timestamp>&<dir>", methods=["POST"])
 @flask_login.login_required
 def delete(timestamp, dir):
     user_name = flask_login.current_user.id

@@ -27,10 +27,10 @@ def create_app():
     with app.app_context():
         from home_music.routes import content, auth, errors, files_operations, processes
 
-        app.register_blueprint(content.content_)
-        app.register_blueprint(auth.auth_)
-        app.register_blueprint(errors.errors_)
-        app.register_blueprint(files_operations.files_operations_)
-        app.register_blueprint(processes.processes_)
+        app.register_blueprint(content.content)
+        app.register_blueprint(auth.auth)
+        app.register_blueprint(errors.errors)
+        app.register_blueprint(files_operations.files_operations)
+        app.register_blueprint(processes.processes)
 
         return app

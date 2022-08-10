@@ -11,3 +11,5 @@ class Config:
     APP_PORT = 8080
     APP_HOST = "0.0.0.0"
     DEBUG_MODE = False
+
+    SQLALCHEMY_DATABASE_URI = "mysql://root:{password}@{address}/{db_name}"

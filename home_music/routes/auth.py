@@ -1,8 +1,7 @@
 from flask import render_template, request, redirect, url_for, Blueprint
 import flask_login
-from home_music.users import user
-from home_music.users import users_accounts as users
 from passlib.hash import sha256_crypt
+from home_music.models import User
 
 
 auth = Blueprint("auth", __name__, template_folder='template', static_folder='static')
@@ -13,21 +12,20 @@ def login():
     if request.method == "GET":
         if flask_login.current_user.is_authenticated:
             return redirect(url_for("content.home"))
+
         else:
             message = ""
             return render_template("login.html", message=message)
 
     else:
         try:
-            users_accounts = users.UsersAccounts.users
-
             username = request.form["user_name"]
+            password = request.form["password"]
 
-            if sha256_crypt.verify(request.form["password"], users_accounts[username]["password"]):
-                user_model = user.User()
-                user_model.id = username
+            user = User.query.filter_by(username=username).first()
 
-                flask_login.login_user(user_model)
+            if user and sha256_crypt.verify(password, user.password):
+                flask_login.login_user(user)
 
                 return redirect(url_for("content.home"))
             else:

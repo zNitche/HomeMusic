@@ -1,7 +1,5 @@
 from flask import Flask
 import flask_login
-from home_music.users import user
-from home_music.users import users_accounts
 from flask_sqlalchemy import SQLAlchemy
 import os
 from config import Config
@@ -18,8 +16,6 @@ def create_app():
     login_manager = flask_login.LoginManager()
     login_manager.init_app(app)
 
-    users = users_accounts.UsersAccounts.users
-
     app.config["SQLALCHEMY_DATABASE_URI"] = Config.SQLALCHEMY_DATABASE_URI.format(
         password=os.environ.get("MYSQL_ROOT_PASSWORD"),
         address=os.environ.get("MYSQL_SERVER_HOST"),
@@ -31,14 +27,8 @@ def create_app():
     from home_music import models
 
     @login_manager.user_loader
-    def user_loader(username):
-
-        if username not in users:
-            return
-
-        user_model = user.User()
-        user_model.id = username
-        return user_model
+    def user_loader(user_id):
+        return models.User.query.get(int(user_id))
 
     with app.app_context():
         db.create_all()

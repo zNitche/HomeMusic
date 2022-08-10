@@ -26,7 +26,7 @@ def home():
 @content.route("/processes")
 @flask_login.login_required
 def processes():
-    user_name = flask_login.current_user.id
+    user_name = flask_login.current_user.username
     is_user_authenticated = flask_login.current_user.is_authenticated
 
     running_processes, finished_processes = processes_utils.get_processes(os.path.join(LOG_FILES_LOCATION, user_name))

@@ -37,7 +37,7 @@ def processes():
 @content.route("/process_details/<log_name>")
 @flask_login.login_required
 def process_details(log_name):
-    user_name = flask_login.current_user.id
+    user_name = flask_login.current_user.username
 
     with open(os.path.join(LOG_FILES_LOCATION, user_name, f"{log_name}.json")) as file:
         log_data = json.loads(file.read())

@@ -14,7 +14,7 @@ files_operations = Blueprint("files_operations", __name__, template_folder='temp
 @files_operations.route("/files_operations/download/<dir>", methods=["GET", "POST"])
 @flask_login.login_required
 def download(dir):
-    user_name = flask_login.current_user.id
+    user_name = flask_login.current_user.username
 
     file_name = f"{dir}.zip"
     file_path = os.path.join(FILES_LOCATION, user_name, file_name)
@@ -25,7 +25,7 @@ def download(dir):
 @files_operations.route("/files_operations/delete/<timestamp>&<dir>", methods=["POST"])
 @flask_login.login_required
 def delete(timestamp, dir):
-    user_name = flask_login.current_user.id
+    user_name = flask_login.current_user.username
 
     path_to_zip_file = os.path.join(FILES_LOCATION, user_name, f"{dir}.zip")
     path_to_report_file = os.path.join(LOG_FILES_LOCATION, user_name, f"{timestamp}.json")

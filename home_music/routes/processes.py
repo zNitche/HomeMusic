@@ -17,7 +17,7 @@ processes = Blueprint("processes", __name__, template_folder='template', static_
 @processes.route("/processes/cancel_process/<timestamp>", methods=["GET", "POST"])
 @flask_login.login_required
 def cancel_process(timestamp):
-    user_name = flask_login.current_user.id
+    user_name = flask_login.current_user.username
 
     log_path = os.path.join(LOG_FILES_LOCATION, user_name, f"{timestamp}.json")
 
@@ -29,7 +29,7 @@ def cancel_process(timestamp):
 @processes.route("/processes/get_music", methods=["POST"])
 @flask_login.login_required
 def get_music():
-    user_name = flask_login.current_user.id
+    user_name = flask_login.current_user.username
 
     music = request.form["content"]
 

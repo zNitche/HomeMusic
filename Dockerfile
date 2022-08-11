@@ -5,6 +5,6 @@ COPY . /HomeMusic
 WORKDIR /HomeMusic
 
 RUN pip3 install -r requirements.txt
-RUN apt update && apt -y install ffmpeg zip
+RUN apt update && apt -y install ffmpeg zip default-libmysqlclient-dev
 
 CMD gunicorn -c gunicorn.conf.py app:app --preload

@@ -23,6 +23,16 @@ def init_migrations(app):
     flask_migrate.upgrade(migrations_dir_path)
 
 
+def register_blueprints(app):
+    from home_music.routes import content, auth, errors, files_operations, processes
+
+    app.register_blueprint(content.content)
+    app.register_blueprint(auth.auth)
+    app.register_blueprint(errors.errors)
+    app.register_blueprint(files_operations.files_operations)
+    app.register_blueprint(processes.processes)
+
+
 def create_app():
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object('config.Config')
@@ -49,13 +59,6 @@ def create_app():
         db.create_all()
 
         init_migrations(app)
-
-        from home_music.routes import content, auth, errors, files_operations, processes
-
-        app.register_blueprint(content.content)
-        app.register_blueprint(auth.auth)
-        app.register_blueprint(errors.errors)
-        app.register_blueprint(files_operations.files_operations)
-        app.register_blueprint(processes.processes)
+        register_blueprints(app)
 
         return app

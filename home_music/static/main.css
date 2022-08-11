@@ -226,3 +226,25 @@ input.login-form-input {
     justify-content: center;
     margin-top: 10px;
 }
+
+.flashed-messages-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.flashed-message-container {
+    display: flex;
+    width: 100%;
+    color: #ffffff !important;
+    font-size: 125%;
+    justify-content: center;
+}
+
+.flashed-message-container-success {
+    background-color: green;
+}
+
+.flashed-message-container-error {
+    background-color: red;
+}

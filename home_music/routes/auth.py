@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, Blueprint
+from flask import render_template, request, redirect, url_for, Blueprint, flash
 import flask_login
 from passlib.hash import sha256_crypt
 from home_music.models import User
@@ -14,8 +14,7 @@ def login():
             return redirect(url_for("content.home"))
 
         else:
-            message = ""
-            return render_template("login.html", message=message)
+            return render_template("login.html")
 
     else:
         try:
@@ -28,13 +27,16 @@ def login():
                 flask_login.login_user(user)
 
                 return redirect(url_for("content.home"))
+
             else:
-                message = "Wrong username or password"
-                return render_template("login.html", message=message)
+                flash("Wrong username or password", "error")
+
+                return render_template("login.html")
 
         except:
-            message = "Wrong username or password"
-            return render_template("login.html", message=message)
+            flash("Wrong username or password", "error")
+
+            return render_template("login.html")
 
 
 @auth.route("/auth/logout", methods=["POST", "GET"])

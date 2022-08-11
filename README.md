@@ -3,21 +3,30 @@
 
 ---
 ### Install
-1. Clone this repo
-2. Create users accounts using `manage_users.py`
-3. Build docker image `sudo docker build -t homemusic .`
-4. Run docker container
+1. Clone this repo.
+2. Generate `.env` config file and change config values (`LOGS_PATH`, `FILES_PATH` and `MYSQL_ROOT_PASSWORD`).
 ```
-sudo docker run --name=homemusic -d \
--v <path_to_logs_storage_on_host>:/HomeMusic/logs \
--v <path_to_files_storage_on_host>:/HomeMusic/files \
--p 8080:8080 homemusic
+python3 generate_dotenv.py
 ```
-5. Make docker container restart after reboot `sudo docker update --restart unless-stopped homemusic`
+3. Run docker container.
+```
+sudo docker compose up -d
+```
+4. Bash into container.
+```
+sudo docker container exec -it home_music_web_app bash
+```
+5. Create users accounts using `users_manager.py`.
+
+### Dev
+1. Change `MYSQL_SERVER_HOST` in `.env` to `127.0.0.1`
+2. Run DEV MySQL container.
+```
+sudo docker compose -f docker-compose-dev.yml up
+```
 
 ### Usage
-1. Login (Test user creds: `login = user | password = test`)
-2. Enter yt link/links (if many seperate them with `|`)
-3. Press `Get!` button.
-4. Wait until process to finish (or cancel it)
-5. Press `Download` button to download `.zip` file containing your music
+1. Enter yt link/links (if many seperate them with `|`)
+2. Press `Get!` button.
+3. Wait until process to finish (or cancel it)
+4. Press `Download` button to download `.zip` file containing your music

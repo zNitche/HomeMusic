@@ -3,3 +3,7 @@ __pycache__/
 .files/*
 .tmp/*
 *.json
+database/
+.env
+migrations/
+*.zip

@@ -28,7 +28,7 @@
                     HomeMusic
                 </a>
             </span>
-            {% if is_user_authenticated %}
+            {% if current_user.is_authenticated %}
                 <form action="{{ url_for( 'auth.logout' ) }}" method="POST">
                     <a href="{{ url_for( 'content.processes' ) }}">
                         <button class="logout-button" type="button">

@@ -19,7 +19,7 @@ def download(dir):
     file_name = f"{dir}.zip"
     file_path = os.path.join(FILES_LOCATION, user_name, file_name)
 
-    return send_file(file_path, as_attachment=False, attachment_filename=file_name, cache_timeout=0)
+    return send_file(file_path, as_attachment=False, download_name=file_name, max_age=0)
 
 
 @files_operations.route("/files_operations/delete/<timestamp>&<dir>", methods=["POST"])

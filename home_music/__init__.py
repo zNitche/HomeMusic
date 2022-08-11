@@ -2,10 +2,25 @@ from flask import Flask
 import flask_login
 from flask_sqlalchemy import SQLAlchemy
 import os
+from flask_migrate import Migrate
+import flask_migrate
 from config import Config
 
 
 db = SQLAlchemy()
+migrate = Migrate(compare_type=True)
+
+
+def init_migrations(app):
+    migrations_dir_path = app.config["MIGRATIONS_DIR_PATH"]
+
+    migrate.init_app(app, db, directory=migrations_dir_path)
+
+    if not os.path.exists(migrations_dir_path):
+        flask_migrate.init(migrations_dir_path)
+
+    flask_migrate.migrate(migrations_dir_path)
+    flask_migrate.upgrade(migrations_dir_path)
 
 
 def create_app():
@@ -32,6 +47,8 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+
+        init_migrations(app)
 
         from home_music.routes import content, auth, errors, files_operations, processes
 

@@ -23,6 +23,13 @@ def get_processes(logs_path):
     return running_processes, finished_processes
 
 
+def get_process_data(logs_path, timestamp):
+    with open(os.path.join(logs_path, timestamp), "r") as log_file:
+        data = json.loads(log_file.read())
+
+    return data
+
+
 def stop_process(log_path, out_path):
     with open(log_path, "r") as file:
         log_data = json.loads(file.read())

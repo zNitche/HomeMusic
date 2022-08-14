@@ -24,7 +24,7 @@
                         </button>
                     </form>
                 {% endif %}
-                <form action="{{ url_for('files_operations.delete', dir=log_data['dir_path'], timestamp=log_data['timestamp']) }}" method="POST">
+                <form action="{{ url_for('files_operations.delete', timestamp=log_data['timestamp']) }}" method="POST">
                     <button class="process-button" type="submit">
                         Delete
                     </button>

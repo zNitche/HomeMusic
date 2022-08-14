@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, request
+from flask import Blueprint, redirect, url_for, request, flash
 from flask import current_app as app
 import flask_login
 import os
@@ -14,7 +14,7 @@ LOG_FILES_LOCATION = app.config["LOG_FILES_LOCATION"]
 processes = Blueprint("processes", __name__, template_folder='template', static_folder='static')
 
 
-@processes.route("/processes/cancel_process/<timestamp>", methods=["GET", "POST"])
+@processes.route("/processes/<timestamp>/cancel", methods=["POST"])
 @flask_login.login_required
 def cancel_process(timestamp):
     user_name = flask_login.current_user.username
@@ -52,7 +52,11 @@ def get_music():
         download_process = Process(music_list, timestamp, log_path, dir_path)
         download_process.start_process()
 
+        flash(f"Started process with timestamp {timestamp}", "success")
+
         return redirect(url_for("content.process_details", log_name=timestamp))
 
     else:
+        flash("Music URL can't be empty", "error")
+
         return redirect(url_for("content.home"))

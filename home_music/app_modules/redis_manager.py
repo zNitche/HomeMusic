@@ -21,7 +21,8 @@ class RedisManager(AppManagerBase):
         return "redis_manager"
 
     def init_connection(self):
-        self.connection = redis.Redis(host=self.server_address, port=self.server_port, db=self.db_id)
+        self.connection = redis.Redis(host=self.server_address, port=self.server_port, db=self.db_id,
+                                      decode_responses=True)
 
         self.connection.flushdb()
 
@@ -37,3 +38,11 @@ class RedisManager(AppManagerBase):
             value = json.loads(data)
 
         return value
+
+    def get_keys(self):
+        keys = self.connection.scan_iter("*")
+
+        return keys
+
+    def delete_key(self, key):
+        self.connection.delete(key)

@@ -1,8 +1,6 @@
-from flask import render_template, Blueprint, redirect, url_for
+from flask import render_template, Blueprint, redirect, url_for, abort
 from flask import current_app as app
 import flask_login
-import os
-import json
 from home_music.utils import processes_utils
 
 
@@ -24,18 +22,23 @@ def home():
 @content.route("/processes")
 @flask_login.login_required
 def processes():
-    user_name = flask_login.current_user.username
+    logs_timestamps = app.redis_manager.get_keys()
+    logs_data = [app.redis_manager.get_value(timestamp) for timestamp in logs_timestamps]
 
-    running_processes, finished_processes = [], []
+    running_processes = processes_utils.get_running_processes(logs_data)
     running_processes = list(reversed(sorted(running_processes)))
-    finished_processes = list(reversed(sorted(finished_processes)))
+    finished_processes = list(reversed(sorted([])))
 
     return render_template("processes.html", log_files=finished_processes, running_log_files=running_processes)
 
 
-@content.route("/process_details/<log_name>")
+@content.route("/process_details/<timestamp>")
 @flask_login.login_required
-def process_details(log_name):
-    user_name = flask_login.current_user.username
+def process_details(timestamp):
+    log_data = app.redis_manager.get_value(timestamp)
 
-    return render_template("process_details.html", log_data={})
+    if log_data:
+        return render_template("process_details.html", log_data=log_data)
+
+    else:
+        abort(404)

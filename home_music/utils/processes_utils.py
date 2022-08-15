@@ -1,21 +1,8 @@
-import os
-import json
-
-
-def get_processes(logs_path):
-    finished_processes = []
+def get_running_processes(logs_data):
     running_processes = []
 
-    for log in os.listdir(logs_path):
-        if log.endswith(".json"):
-            with open(os.path.join(logs_path, log), "r") as log_file:
-                log_data = json.loads(log_file.read())
+    for log_data in logs_data:
+        if log_data["is_running"]:
+            running_processes.append(log_data["timestamp"])
 
-                log = log.split(".")[0]
-
-                if log_data["is_running"]:
-                    running_processes.append(log)
-                else:
-                    finished_processes.append(log)
-
-    return running_processes, finished_processes
+    return running_processes

@@ -55,6 +55,8 @@ class Process:
 
         self.update_log()
 
+        self.finish_process()
+
     def update_log(self):
         log_data = self.app.redis_manager.get_value(self.timestamp)
 
@@ -78,3 +80,6 @@ class Process:
             log_data["music_names"] = self.downloaded_files
 
             self.app.redis_manager.set_value(self.timestamp, log_data)
+
+    def finish_process(self):
+        self.app.redis_manager.delete_key(self.timestamp)

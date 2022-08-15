@@ -31,13 +31,15 @@ def cancel_process(timestamp):
     try:
         os.kill(pid, signal.SIGTERM)
 
+        app.redis_manager.delete_key(timestamp)
+
+        if os.path.exists(os.path.join(out_path, dir_path)):
+            shutil.rmtree(os.path.join(out_path, dir_path))
+
     except Exception as e:
         pass
 
-    if os.path.exists(os.path.join(out_path, dir_path)):
-        shutil.rmtree(os.path.join(out_path, dir_path))
-
-    return redirect(url_for("content.process_details", log_name=timestamp))
+    return redirect(url_for("content.process_details", timestamp=timestamp))
 
 
 @processes.route("/processes/get_music", methods=["POST"])
@@ -64,7 +66,7 @@ def get_music():
 
         flash(f"Started process with timestamp {timestamp}", "success")
 
-        return redirect(url_for("content.process_details", log_name=timestamp))
+        return redirect(url_for("content.process_details", timestamp=timestamp))
 
     else:
         flash("Music URL can't be empty", "error")

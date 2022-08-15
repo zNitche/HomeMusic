@@ -2,13 +2,14 @@ from flask import Blueprint, redirect, url_for, request, flash
 from flask import current_app as app
 import flask_login
 import os
+import signal
+import shutil
 from datetime import date, datetime
-from home_music.utils import processes_utils
 from home_music.process import Process
+from config import Config
 
 
 FILES_LOCATION = app.config["FILES_LOCATION"]
-LOG_FILES_LOCATION = app.config["LOG_FILES_LOCATION"]
 
 
 processes = Blueprint("processes", __name__, template_folder='template', static_folder='static')
@@ -17,11 +18,24 @@ processes = Blueprint("processes", __name__, template_folder='template', static_
 @processes.route("/processes/<timestamp>/cancel", methods=["POST"])
 @flask_login.login_required
 def cancel_process(timestamp):
-    user_name = flask_login.current_user.username
+    out_path = os.path.join(Config.FILES_LOCATION, flask_login.current_user.username)
 
-    log_path = os.path.join(LOG_FILES_LOCATION, user_name, f"{timestamp}.json")
+    log_data = app.redis_manager.get_value(timestamp)
 
-    processes_utils.stop_process(log_path, os.path.join(FILES_LOCATION, user_name))
+    pid = log_data["process_pid"]
+    dir_path = log_data["dir_path"]
+    log_data["is_running"] = False
+    log_data["was_canceled"] = True
+    log_data["process_pid"] = None
+
+    try:
+        os.kill(pid, signal.SIGTERM)
+
+    except Exception as e:
+        pass
+
+    if os.path.exists(os.path.join(out_path, dir_path)):
+        shutil.rmtree(os.path.join(out_path, dir_path))
 
     return redirect(url_for("content.process_details", log_name=timestamp))
 
@@ -31,10 +45,10 @@ def cancel_process(timestamp):
 def get_music():
     user_name = flask_login.current_user.username
 
-    music = request.form["content"]
+    music_url = request.form["content"]
 
-    if music != "":
-        music_list = list(music.split("|"))
+    if music_url != "":
+        music_list = list(music_url.split("|"))
         timestamp = datetime.now()
 
         today = date.today()
@@ -43,13 +57,9 @@ def get_music():
 
         dir_path = os.path.join(FILES_LOCATION, user_name, f"{today}_{hour}")
 
-        timestamp = str(timestamp).replace(" ", "_")
-        timestamp = str(timestamp).replace(".", "_")
+        timestamp = str(timestamp).replace(" ", "_").replace(".", "_")
 
-        log_path = os.path.join(LOG_FILES_LOCATION, user_name)
-        log_path = os.path.join(log_path, f"{timestamp}.json")
-
-        download_process = Process(music_list, timestamp, log_path, dir_path)
+        download_process = Process(app, music_list, timestamp, dir_path)
         download_process.start_process()
 
         flash(f"Started process with timestamp {timestamp}", "success")

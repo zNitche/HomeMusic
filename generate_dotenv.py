@@ -8,7 +8,6 @@ def generate(path):
         "MYSQL_SERVER_HOST": "db",
         "DB_NAME": "app_db",
         "DB_PATH": "./database/mysql",
-        "LOGS_PATH": "",
         "FILES_PATH": "",
         "REDIS_SERVER_ADDRESS": "",
         "REDIS_SERVER_PORT": ""

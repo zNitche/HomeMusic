@@ -21,7 +21,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ${LOGS_PATH}:/HomeMusic/logs
       - ${FILES_PATH}:/HomeMusic/files
     env_file:
       - .env

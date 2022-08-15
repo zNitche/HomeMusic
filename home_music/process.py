@@ -1,18 +1,20 @@
 import multiprocessing
 import os
-import json
 import youtube_dl
 
 
 class Process:
-    def __init__(self, music_links, timestamp, log_path, dir_path):
+    def __init__(self, app, music_links, timestamp, dir_path):
+        self.app = app
+
         self.music_links = music_links
         self.process_thread = multiprocessing.Process(target=self.process)
+
         self.timestamp = str(timestamp)
         self.process_pid = None
         self.is_running = False
         self.was_cancelled = False
-        self.log_path = log_path
+
         self.dir_path = dir_path
         self.downloaded_files = []
 
@@ -53,14 +55,10 @@ class Process:
 
         self.update_log()
 
-    def read_log(self):
-        with open(self.log_path, "r") as file:
-            log_file = json.loads(file.read())
-
-        return log_file
-
     def update_log(self):
-        if not os.path.exists(self.log_path):
+        log_data = self.app.redis_manager.get_value(self.timestamp)
+
+        if log_data is None:
             log_data = {}
 
             log_data["timestamp"] = self.timestamp
@@ -71,15 +69,12 @@ class Process:
             log_data["is_running"] = self.is_running
             log_data["was_canceled"] = self.was_cancelled
 
-            with open(self.log_path, "w") as file:
-                file.write(json.dumps(log_data, indent=4))
-        else:
-            log_data = self.read_log()
+            self.app.redis_manager.set_value(self.timestamp, log_data)
 
+        else:
             log_data["process_pid"] = self.process_pid
             log_data["is_running"] = self.is_running
             log_data["was_canceled"] = self.was_cancelled
             log_data["music_names"] = self.downloaded_files
 
-            with open(self.log_path, "w") as file:
-                file.write(json.dumps(log_data, indent=4))
+            self.app.redis_manager.set_value(self.timestamp, log_data)

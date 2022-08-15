@@ -1,5 +1,6 @@
 import redis
 import os
+import json
 from home_music.app_modules.app_manager_base import AppManagerBase
 
 
@@ -25,9 +26,14 @@ class RedisManager(AppManagerBase):
         self.connection.flushdb()
 
     def set_value(self, key, value):
-        self.connection.set(key, value)
+        self.connection.set(key, json.dumps(value))
 
     def get_value(self, key):
-        value = self.connection.get(key)
+        value = None
+
+        data = self.connection.get(key)
+
+        if data:
+            value = json.loads(data)
 
         return value

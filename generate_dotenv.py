@@ -9,7 +9,9 @@ def generate(path):
         "DB_NAME": "app_db",
         "DB_PATH": "./database/mysql",
         "LOGS_PATH": "",
-        "FILES_PATH": ""
+        "FILES_PATH": "",
+        "REDIS_SERVER_ADDRESS": "",
+        "REDIS_SERVER_PORT": ""
     }
 
     parsed_args = [f"{key}={args[key]}" for key in args]

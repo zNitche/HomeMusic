@@ -11,3 +11,9 @@ services:
       - ${DB_PATH}:/var/lib/mysql
     env_file:
       - .env
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: "no"
+    ports:
+      - "6379:6379"

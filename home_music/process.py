@@ -1,6 +1,9 @@
 import multiprocessing
 import os
 import youtube_dl
+import sqlalchemy
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import NullPool
 
 
 class Process:
@@ -17,6 +20,14 @@ class Process:
 
         self.dir_path = dir_path
         self.downloaded_files = []
+
+        self.db_session = self.init_db_session()
+
+    def init_db_session(self):
+        db_engine = sqlalchemy.create_engine(self.app.config["SQLALCHEMY_DATABASE_URI"], poolclass=NullPool)
+        session = sessionmaker(bind=db_engine, expire_on_commit=False)
+
+        return session()
 
     def start_process(self):
         if os.path.exists(self.dir_path):

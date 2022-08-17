@@ -46,22 +46,20 @@ def cancel_process(timestamp):
 @flask_login.login_required
 def get_music():
     user_name = flask_login.current_user.username
+    user_id = flask_login.current_user.id
 
     music_url = request.form["content"]
 
     if music_url != "":
         music_list = list(music_url.split("|"))
+
         timestamp = datetime.now()
-
-        today = date.today()
-        hour = timestamp.strftime("%H:%M:%S")
-        today = today.strftime("%d:%m:%Y")
-
-        dir_path = os.path.join(FILES_LOCATION, user_name, f"{today}_{hour}")
-
         timestamp = str(timestamp).replace(" ", "_").replace(".", "_")
 
-        download_process = Process(app, music_list, timestamp, dir_path)
+        dir_path_root = os.path.join(FILES_LOCATION, user_name)
+        dir_path = os.path.join(dir_path_root, timestamp)
+
+        download_process = Process(user_id, app, music_list, timestamp, dir_path, dir_path_root)
         download_process.start_process()
 
         flash(f"Started process with timestamp {timestamp}", "success")

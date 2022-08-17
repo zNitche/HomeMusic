@@ -47,7 +47,7 @@ def process_details(timestamp):
     log_data = archive_log_data.__dict__ if archive_log_data else running_log_data
 
     if log_data:
-        return render_template("process_details.html", log_data=log_data)
+        if log_data["owner_id"] == flask_login.current_user.id:
+            return render_template("process_details.html", log_data=log_data)
 
-    else:
-        abort(404)
+    abort(404)

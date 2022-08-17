@@ -101,7 +101,8 @@ class Process:
     def finish_process(self):
         self.app.redis_manager.delete_key(self.timestamp)
 
-        log = models.ProcessLog(timestamp=self.timestamp, dir_path=self.dir_path, music_links="".join(self.music_links),
+        log = models.ProcessLog(timestamp=self.timestamp, dir_path=self.dir_path.split("/")[-1],
+                                music_links="".join(self.music_links),
                                 music_names="".join(self.downloaded_files),
                                 was_canceled=self.was_cancelled, owner_id=self.owner_id)
 

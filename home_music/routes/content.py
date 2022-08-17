@@ -1,13 +1,11 @@
-from flask import render_template, Blueprint, redirect, url_for
+from flask import render_template, Blueprint, redirect, url_for, abort
 from flask import current_app as app
 import flask_login
-import os
-import json
 from home_music.utils import processes_utils
+from home_music import models
 
 
 FILES_LOCATION = app.config["FILES_LOCATION"]
-LOG_FILES_LOCATION = app.config["LOG_FILES_LOCATION"]
 
 
 content = Blueprint("content", __name__, template_folder='template', static_folder='static')
@@ -25,21 +23,32 @@ def home():
 @content.route("/processes")
 @flask_login.login_required
 def processes():
-    user_name = flask_login.current_user.username
+    logs_timestamps = app.redis_manager.get_keys()
+    logs_data = [app.redis_manager.get_value(timestamp) for timestamp in logs_timestamps]
 
-    running_processes, finished_processes = processes_utils.get_processes(os.path.join(LOG_FILES_LOCATION, user_name))
-    running_processes = list(reversed(sorted(running_processes)))
+    finished_processes = models.ProcessLog.query.filter_by(owner_id=flask_login.current_user.id).all()
+    finished_processes = [log.timestamp for log in finished_processes]
+
+    running_processes_data = processes_utils.get_running_processes_data(logs_data, flask_login.current_user.id)
+    running_processes_timestamps = [log_data["timestamp"] for log_data in running_processes_data]
+
+    running_processes = list(reversed(sorted(running_processes_timestamps)))
     finished_processes = list(reversed(sorted(finished_processes)))
 
     return render_template("processes.html", log_files=finished_processes, running_log_files=running_processes)
 
 
-@content.route("/process_details/<log_name>")
+@content.route("/process_details/<timestamp>")
 @flask_login.login_required
-def process_details(log_name):
-    user_name = flask_login.current_user.username
+def process_details(timestamp):
+    archive_log_data = models.ProcessLog.query.filter_by(owner_id=flask_login.current_user.id, timestamp=timestamp).first()
 
-    with open(os.path.join(LOG_FILES_LOCATION, user_name, f"{log_name}.json")) as file:
-        log_data = json.loads(file.read())
+    running_log_data = app.redis_manager.get_value(timestamp)
 
-    return render_template("process_details.html", log_data=log_data)
+    log_data = archive_log_data.__dict__ if archive_log_data else running_log_data
+
+    if log_data:
+        if log_data["owner_id"] == flask_login.current_user.id:
+            return render_template("process_details.html", log_data=log_data)
+
+    abort(404)

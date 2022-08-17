@@ -56,13 +56,9 @@ class UsersManager:
             session.commit()
 
         user_files_path = os.path.join(Config.FILES_LOCATION, user_name)
-        user_logs_path = os.path.join(Config.LOG_FILES_LOCATION, user_name)
 
         if not os.path.exists(user_files_path):
             os.mkdir(user_files_path)
-
-        if not os.path.exists(user_logs_path):
-            os.mkdir(user_logs_path)
 
         return 1
 
@@ -80,13 +76,9 @@ class UsersManager:
                 return 0
 
             user_files_path = os.path.join(Config.FILES_LOCATION, user_name)
-            user_logs_path = os.path.join(Config.LOG_FILES_LOCATION, user_name)
 
             if os.path.exists(user_files_path):
                 shutil.rmtree(user_files_path)
-
-            if os.path.exists(user_logs_path):
-                shutil.rmtree(user_logs_path)
 
             return 1
 

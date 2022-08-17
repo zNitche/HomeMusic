@@ -12,11 +12,11 @@
                     </p>
                 </div>
             {% else %}
-                {% for log in running_log_files %}
+                {% for timestamp in running_log_files %}
                     <div class="log-container">
-                        <a href="{{ url_for( 'content.process_details', log_name=log ) }}">
+                        <a href="{{ url_for( 'content.process_details', timestamp=timestamp ) }}">
                             <button class="log-button">
-                                {{ log }}
+                                {{ timestamp }}
                             </button>
                         </a>
                     </div>
@@ -33,11 +33,11 @@
                     </p>
                 </div>
             {% else %}
-                {% for log in log_files %}
+                {% for timestamp in log_files %}
                     <div class="log-container">
-                        <a href="{{ url_for( 'content.process_details', log_name=log ) }}">
+                        <a href="{{ url_for( 'content.process_details', timestamp=timestamp ) }}">
                             <button class="log-button">
-                                {{ log }}
+                                {{ timestamp }}
                             </button>
                         </a>
                     </div>

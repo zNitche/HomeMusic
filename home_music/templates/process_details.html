@@ -6,8 +6,6 @@
             <p><b>Directory Name:</b> {{ log_data["dir_path"] }}</p>
             <p><b>Music links:</b> {{ log_data["music_links"] }}</p>
             <p><b>Music names:</b> {{ log_data["music_names"] }}</p>
-            <p><b>PID:</b> {{ log_data["process_pid"] }}</p>
-            <p><b>Is process running:</b> {{ log_data["is_running"] }}</p>
             <p><b>Was process canceled:</b> {{ log_data["was_canceled"] }}</p>
 
             {% if log_data["is_running"] %}
@@ -18,7 +16,7 @@
                 </form>
             {% elif not log_data["is_running"] %}
                 {% if not log_data["was_canceled"] %}
-                    <form action="{{ url_for('files_operations.download', dir=log_data['dir_path']) }}" method="POST">
+                    <form action="{{ url_for('files_operations.download', timestamp=log_data['timestamp']) }}" method="POST">
                         <button class="process-button" type="submit">
                             Download
                         </button>

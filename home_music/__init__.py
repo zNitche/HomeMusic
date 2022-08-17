@@ -33,6 +33,15 @@ def register_blueprints(app):
     app.register_blueprint(processes.processes)
 
 
+def setup_app_modules(app):
+    from home_music.app_modules.redis_manager import RedisManager
+
+    managers = [RedisManager(0)]
+
+    for manager in managers:
+        setattr(app, manager.get_name(), manager)
+
+
 def create_app():
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object('config.Config')
@@ -59,6 +68,7 @@ def create_app():
         db.create_all()
 
         init_migrations(app)
+        setup_app_modules(app)
         register_blueprints(app)
 
         return app

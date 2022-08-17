@@ -4,7 +4,7 @@
 ---
 ### Install
 1. Clone this repo.
-2. Generate `.env` config file and change config values (`LOGS_PATH`, `FILES_PATH` and `MYSQL_ROOT_PASSWORD`).
+2. Generate `.env` config file and change config values (`FILES_PATH` and `MYSQL_ROOT_PASSWORD`).
 ```
 python3 generate_dotenv.py
 ```
@@ -20,7 +20,8 @@ sudo docker container exec -it home_music_web_app bash
 
 ### Dev
 1. Change `MYSQL_SERVER_HOST` in `.env` to `127.0.0.1`
-2. Run DEV MySQL container.
+2. Change `REDIS_SERVER_ADDRESS` in `.env` to `127.0.0.1`
+3. Run DEV docker-compose.
 ```
 sudo docker compose -f docker-compose-dev.yml up
 ```

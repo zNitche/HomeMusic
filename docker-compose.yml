@@ -11,17 +11,23 @@ services:
       - ${DB_PATH}:/var/lib/mysql
     env_file:
       - .env
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
 
   web_app:
     depends_on:
       - db
+      - redis
     container_name: home_music_web_app
     build: .
     restart: unless-stopped
     ports:
       - "8080:8080"
     volumes:
-      - ${LOGS_PATH}:/HomeMusic/logs
       - ${FILES_PATH}:/HomeMusic/files
     env_file:
       - .env

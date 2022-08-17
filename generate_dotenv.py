@@ -8,8 +8,9 @@ def generate(path):
         "MYSQL_SERVER_HOST": "db",
         "DB_NAME": "app_db",
         "DB_PATH": "./database/mysql",
-        "LOGS_PATH": "",
-        "FILES_PATH": ""
+        "FILES_PATH": "",
+        "REDIS_SERVER_ADDRESS": "redis",
+        "REDIS_SERVER_PORT": "6379"
     }
 
     parsed_args = [f"{key}={args[key]}" for key in args]

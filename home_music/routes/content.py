@@ -29,7 +29,8 @@ def processes():
     finished_processes = models.ProcessLog.query.filter_by(owner_id=flask_login.current_user.id).all()
     finished_processes = [log.timestamp for log in finished_processes]
 
-    running_processes_timestamps = processes_utils.get_running_processes(logs_data, flask_login.current_user.id)
+    running_processes_data = processes_utils.get_running_processes_data(logs_data, flask_login.current_user.id)
+    running_processes_timestamps = [log_data["timestamp"] for log_data in running_processes_data]
 
     running_processes = list(reversed(sorted(running_processes_timestamps)))
     finished_processes = list(reversed(sorted(finished_processes)))

@@ -1,8 +1,8 @@
-def get_running_processes(logs_data, owner_id):
-    running_processes = []
+def get_running_processes_data(logs_data, owner_id):
+    running_processes_data = []
 
     for log_data in logs_data:
-        if log_data["is_running"] and log_data["owner_id"] == owner_id:
-            running_processes.append(log_data["timestamp"])
+        if log_data["owner_id"] == owner_id:
+            running_processes_data.append(log_data)
 
-    return running_processes
+    return running_processes_data

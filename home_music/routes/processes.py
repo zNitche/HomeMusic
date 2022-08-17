@@ -7,6 +7,8 @@ import shutil
 from datetime import datetime
 from home_music.process import Process
 from config import Config
+from home_music import models
+from home_music import db
 
 
 FILES_LOCATION = app.config["FILES_LOCATION"]
@@ -26,7 +28,6 @@ def cancel_process(timestamp):
     dir_path = log_data["dir_path"]
     log_data["is_running"] = False
     log_data["was_canceled"] = True
-    log_data["process_pid"] = None
 
     try:
         os.kill(pid, signal.SIGTERM)
@@ -35,6 +36,14 @@ def cancel_process(timestamp):
 
         if os.path.exists(os.path.join(out_path, dir_path)):
             shutil.rmtree(os.path.join(out_path, dir_path))
+
+        log = models.ProcessLog(timestamp=log_data["timestamp"], dir_path=log_data["dir_path"],
+                                music_links="".join(log_data["music_links"]),
+                                music_names="".join(log_data["music_names"]),
+                                was_canceled=log_data["was_canceled"], owner_id=log_data["owner_id"])
+
+        db.session.add(log)
+        db.session.commit()
 
     except Exception as e:
         pass

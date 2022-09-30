@@ -1,4 +1,5 @@
 import os
+import multiprocessing
 
 
 class Config:
@@ -15,3 +16,9 @@ class Config:
     DEBUG_MODE = False
 
     SQLALCHEMY_DATABASE_URI = "mysql://root:{password}@{address}/{db_name}"
+
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "pool_size": multiprocessing.cpu_count() - 1 + 10,
+        "pool_recycle": 10,
+        "pool_pre_ping": True
+    }

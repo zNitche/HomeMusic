@@ -3,7 +3,8 @@ __pycache__/
 .files/*
 .tmp/*
 *.json
-database/
+mysql/
 .env
 migrations/
 *.zip
+*.db

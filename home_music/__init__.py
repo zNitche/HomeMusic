@@ -4,7 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_migrate import Migrate
 import flask_migrate
-from config import Config
+from consts import DBConsts
+from home_music import db_utils
 
 
 db = SQLAlchemy()
@@ -42,6 +43,22 @@ def setup_app_modules(app):
         setattr(app, manager.get_name(), manager)
 
 
+def setup_db(app):
+    db_uri = ""
+    db_config = {}
+
+    if app.config["DB_MODE"] == DBConsts.SQLITE_DB:
+        db_uri, db_config = db_utils.setup_sqlite_db()
+
+    elif app.config["DB_MODE"] == DBConsts.MYSQL_DB:
+        db_uri, db_config = db_utils.setup_mysql_db()
+
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = db_config
+
+    db.init_app(app)
+
+
 def create_app():
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object('config.Config')
@@ -50,13 +67,7 @@ def create_app():
     login_manager = flask_login.LoginManager()
     login_manager.init_app(app)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = Config.SQLALCHEMY_DATABASE_URI.format(
-        password=os.environ.get("MYSQL_ROOT_PASSWORD"),
-        address=os.environ.get("MYSQL_SERVER_HOST"),
-        db_name=os.environ.get("DB_NAME")
-    )
-
-    db.init_app(app)
+    setup_db(app)
 
     from home_music import models
 

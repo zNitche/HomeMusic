@@ -1,11 +1,13 @@
 from home_music.models import User
+from home_music import db_utils
+from consts import DBConsts
 import sqlalchemy
 import sqlalchemy.orm
 import os
 import dotenv
 from passlib.hash import sha256_crypt
 import shutil
-from config import Config
+
 
 
 class UsersManager:
@@ -28,11 +30,13 @@ class UsersManager:
         return password
 
     def init_db_session(self):
-        db_uri = Config.SQLALCHEMY_DATABASE_URI.format(
-            password=os.environ.get("MYSQL_ROOT_PASSWORD"),
-            address=os.environ.get("MYSQL_SERVER_HOST"),
-            db_name=os.environ.get("DB_NAME")
-        )
+        db_uri = ""
+
+        if os.environ.get("DB_MODE") == DBConsts.SQLITE_DB:
+            db_uri, _ = db_utils.setup_sqlite_db()
+
+        elif os.environ.get("DB_MODE") == DBConsts.MYSQL_DB:
+            db_uri, _ = db_utils.setup_mysql_db()
 
         engine = sqlalchemy.create_engine(db_uri)
 

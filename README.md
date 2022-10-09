@@ -2,7 +2,7 @@
 ### Easy to use minimalist music downloader
 
 ---
-## MySQL Setup:
+## App + MySQL Setup:
 ### Install
 1. Clone this repo.
 2. Generate `.env` config file and change config values (`FILES_PATH` and `MYSQL_ROOT_PASSWORD`).
@@ -22,7 +22,7 @@ sudo docker compose -f docker-compose.yml up -d
 sudo docker compose -f docker-compose-dev.yml up
 ```
 
-## SQLite Setup:
+## App + SQLite Setup:
 ### Install
 1. Clone this repo.
 2. Generate `.env` config file and change config values (`FILES_PATH`).

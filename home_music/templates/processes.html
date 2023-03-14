@@ -5,14 +5,14 @@
             <p class="log-title">
                 Running processes
             </p>
-            {% if running_log_files|length == 0 %}
+            {% if running_processes|length == 0 %}
                 <div class="log-container">
                     <p>
                         No running processes to show
                     </p>
                 </div>
             {% else %}
-                {% for timestamp in running_log_files %}
+                {% for timestamp in running_processes %}
                     <div class="log-container">
                         <a href="{{ url_for( 'content.process_details', timestamp=timestamp ) }}">
                             <button class="log-button">
@@ -26,14 +26,14 @@
             <p class="log-title">
                 Finished processes
             </p>
-            {% if log_files|length == 0 %}
+            {% if finished_processes|length == 0 %}
                 <div class="log-container">
                     <p>
                         No logs to show
                     </p>
                 </div>
             {% else %}
-                {% for timestamp in log_files %}
+                {% for timestamp in finished_processes %}
                     <div class="log-container">
                         <a href="{{ url_for( 'content.process_details', timestamp=timestamp ) }}">
                             <button class="log-button">

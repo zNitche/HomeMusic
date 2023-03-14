@@ -35,7 +35,9 @@ def processes():
     running_processes = list(reversed(sorted(running_processes_timestamps)))
     finished_processes = list(reversed(sorted(finished_processes)))
 
-    return render_template("processes.html", log_files=finished_processes, running_log_files=running_processes)
+    return render_template("processes.html",
+                           finished_processes=finished_processes,
+                           running_processes=running_processes)
 
 
 @content.route("/process_details/<timestamp>")
@@ -48,7 +50,6 @@ def process_details(timestamp):
     log_data = archive_log_data.__dict__ if archive_log_data else running_log_data
 
     if log_data:
-        if log_data["owner_id"] == flask_login.current_user.id:
-            return render_template("process_details.html", log_data=log_data)
+        return render_template("process_details.html", log_data=log_data)
 
     abort(404)

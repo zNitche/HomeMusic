@@ -7,6 +7,7 @@
             <p><b>Music links:</b> {{ log_data["music_links"] }}</p>
             <p><b>Music names:</b> {{ log_data["music_names"] }}</p>
             <p><b>Was process canceled:</b> {{ log_data["was_canceled"] }}</p>
+            <p><b>Error occurred:</b> {{ log_data["error_occurred"] }}</p>
 
             {% if log_data["is_running"] %}
                 <form action="{{ url_for('processes.cancel_process', timestamp=log_data['timestamp']) }}" method="POST">

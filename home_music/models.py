@@ -17,5 +17,6 @@ class ProcessLog(db.Model):
     music_links = db.Column(db.String(90), nullable=False)
     music_names = db.Column(db.String(90), nullable=False)
     was_canceled = db.Column(db.Boolean, nullable=False)
+    error_occurred = db.Column(db.Boolean, nullable=False)
 
     owner_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)

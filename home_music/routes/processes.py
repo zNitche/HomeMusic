@@ -5,7 +5,7 @@ import os
 import signal
 import shutil
 from datetime import datetime
-from home_music.process import Process
+from home_music.music_downloader_process import MusicDownloaderProcess
 from config import Config
 from home_music import models
 from home_music import db
@@ -68,7 +68,7 @@ def get_music():
         dir_path_root = os.path.join(FILES_LOCATION, user_name)
         dir_path = os.path.join(dir_path_root, timestamp)
 
-        download_process = Process(user_id, app, music_list, timestamp, dir_path, dir_path_root)
+        download_process = MusicDownloaderProcess(user_id, app, music_list, timestamp, dir_path, dir_path_root)
         download_process.start_process()
 
         flash(f"Started process with timestamp {timestamp}", "success")

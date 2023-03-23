@@ -1,7 +1,7 @@
 import multiprocessing
 import os
 import shutil
-import youtube_dl
+import yt_dlp
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
@@ -62,7 +62,7 @@ class MusicDownloaderProcess:
                 "outtmpl": f"{self.dir_path}/%(title)s.%(ext)s",
             }
 
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download(self.music_links)
 
             self.downloaded_files = os.listdir(self.dir_path)

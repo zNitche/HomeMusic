@@ -62,8 +62,7 @@ def get_music():
     if music_url != "":
         music_list = list(music_url.split("|"))
 
-        timestamp = datetime.now()
-        timestamp = str(timestamp).replace(" ", "_").replace(".", "_")
+        timestamp = str(datetime.now()).replace(" ", "_").replace(".", "_")
 
         dir_path_root = os.path.join(FILES_LOCATION, user_name)
         dir_path = os.path.join(dir_path_root, timestamp)

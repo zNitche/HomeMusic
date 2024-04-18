@@ -67,6 +67,17 @@ class MusicDownloaderProcess:
 
             self.downloaded_files = os.listdir(self.dir_path)
 
+            # purge files metadata
+            for file in os.listdir(self.dir_path):
+                file_path = os.path.join(self.dir_path, file)
+                tmp_file_path = os.path.join(self.dir_path, f"tmp_{file}")
+
+                os.system(f"ffmpeg -i '{file_path}' -vcodec copy -acodec copy '{tmp_file_path}'")
+
+                if os.path.exists(tmp_file_path):
+                    os.remove(file_path)
+                    shutil.move(tmp_file_path, file_path)
+
             os.system(f"zip -r -j {os.path.join(self.dir_path_root, self.timestamp)}.zip {self.dir_path}")
             shutil.rmtree(self.dir_path)
 

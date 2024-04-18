@@ -166,7 +166,6 @@ input.login-form-input {
     flex-direction: column;
     margin-bottom: 50px;
     align-items: center;
-    overflow-y: scroll;
 }
 
 .log-container {

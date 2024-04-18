@@ -1,10 +1,9 @@
-html {
+html, body {
     height: 100%;
 }
 
 body {
     margin: 0;
-    height: 100%;
     background-color: #272727;
     font-family: IBM Plex Sans !important;
     color: #ffffff;
@@ -143,6 +142,7 @@ input.login-form-input {
 .search-bar input {
     width: 250px;
     height: 20px;
+    padding: 5px 10px;
 }
 
 .footer {
@@ -231,6 +231,7 @@ input.login-form-input {
     display: flex;
     flex-direction: row;
     width: 100%;
+    padding 5px 0
 }
 
 .flashed-message-container {

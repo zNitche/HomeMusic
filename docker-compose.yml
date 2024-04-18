@@ -1,18 +1,7 @@
 version: "3"
 services:
-  db:
-    image: mysql:5.7
-    container_name: mysql_db
-    restart: unless-stopped
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./db_inits:/docker-entrypoint-initdb.d/:ro
-      - ${DB_PATH}:/var/lib/mysql
-    env_file:
-      - .env
   redis:
-    image: redis:redis:6.2-alpine
+    image: redis:alpine
     container_name: redis
     restart: unless-stopped
     ports:
@@ -20,7 +9,6 @@ services:
 
   web_app:
     depends_on:
-      - db
       - redis
     container_name: home_music_web_app
     build: .
@@ -29,5 +17,6 @@ services:
       - "8080:8080"
     volumes:
       - ${FILES_PATH}:/HomeMusic/files
+      - ${DB_PATH}:/HomeMusic/database
     env_file:
       - .env

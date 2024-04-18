@@ -2,12 +2,13 @@
 ### Easy to use minimalist music downloader
 
 ---
-## App + MySQL Setup:
+
+## App Setup:
 ### Install
 1. Clone this repo.
-2. Generate `.env` config file and change config values (`FILES_PATH` and `MYSQL_ROOT_PASSWORD`).
+2. Generate `.env` config file and change config values (`FILES_PATH`).
 ```
-python3 generate_dotenv.py --db_mode MySQL
+python3 generate_dotenv.py
 ```
 3. Run docker container.
 ```
@@ -15,30 +16,15 @@ sudo docker compose -f docker-compose.yml up -d
 ```
 
 ### Dev
-1. Change `MYSQL_SERVER_HOST` in `.env` to `127.0.0.1`
-2. Change `REDIS_SERVER_ADDRESS` in `.env` to `127.0.0.1`
-3. Run DEV docker-compose.
+1. Change `REDIS_SERVER_ADDRESS` in `.env` to `127.0.0.1`
+2. Run DEV docker-compose.
 ```
 sudo docker compose -f docker-compose-dev.yml up
 ```
 
-## App + SQLite Setup:
-### Install
-1. Clone this repo.
-2. Generate `.env` config file and change config values (`FILES_PATH`).
+3. If needed run database migrations
 ```
-python3 generate_dotenv.py --db_mode SQLite
-```
-3. Run docker container.
-```
-sudo docker compose -f docker-compose-sqlite.yml up -d
-```
-
-### Dev
-1. Change `REDIS_SERVER_ADDRESS` in `.env` to `127.0.0.1`
-2. Run DEV docker-compose.
-```
-sudo docker compose -f docker-compose-dev-sqlite.yml up
+python3 migrate.py
 ```
 
 ## Create accounts

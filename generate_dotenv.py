@@ -1,34 +1,4 @@
 import os
-import argparse
-from consts import DBConsts
-
-
-def get_mysql_config():
-    args = {
-        "DB_MODE": DBConsts.MYSQL_DB,
-        "MYSQL_ROOT_PASSWORD": "test_pass",
-        "MYSQL_SERVER_PORT": "3306",
-        "MYSQL_SERVER_HOST": "db",
-        "DB_NAME": "app_db",
-        "DB_PATH": "./database/mysql",
-        "FILES_PATH": "",
-        "REDIS_SERVER_ADDRESS": "redis",
-        "REDIS_SERVER_PORT": "6379"
-    }
-
-    return args
-
-
-def get_sqlite_config():
-    args = {
-        "DB_MODE": DBConsts.SQLITE_DB,
-        "DB_PATH": "./database",
-        "FILES_PATH": "",
-        "REDIS_SERVER_ADDRESS": "redis",
-        "REDIS_SERVER_PORT": "6379"
-    }
-
-    return args
 
 
 def generate(path, config):
@@ -40,21 +10,7 @@ def generate(path, config):
             file.write("\n")
 
 
-def get_config_for_db_mode(mode):
-    config = {}
-
-    if mode == DBConsts.MYSQL_DB:
-        config = get_mysql_config()
-
-    elif mode == DBConsts.SQLITE_DB:
-        config = get_sqlite_config()
-
-    return config
-
-
-def main(args):
-    db_mode = args.db_mode
-
+def main():
     current_dir = os.path.dirname(os.path.realpath(__file__))
     env_path = os.path.join(current_dir, ".env")
 
@@ -65,19 +21,13 @@ def main(args):
 
     print("Generating .env config file...")
 
-    generate(env_path, get_config_for_db_mode(db_mode))
+    generate(env_path, {"DB_PATH": "./database",
+        "FILES_PATH": "",
+        "REDIS_SERVER_ADDRESS": "redis",
+        "REDIS_SERVER_PORT": "6379"})
 
     print("Generated .env config file...")
 
 
-def get_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--db_mode", type=str, default=DBConsts.MYSQL_DB,
-                        help=f"Database type",
-                        choices=[DBConsts.SQLITE_DB, DBConsts.MYSQL_DB])
-
-    return parser.parse_args()
-
-
 if __name__ == '__main__':
-    main(get_args())
+    main()

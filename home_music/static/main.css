@@ -1,5 +1,6 @@
 html, body {
-    height: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
 body {
@@ -145,15 +146,6 @@ input.login-form-input {
     padding: 5px 10px;
 }
 
-.footer {
-    position: fixed;
-    background-color: #4a4a4a;
-    width: 100%;
-    bottom: 0;
-    text-align: center;
-    padding: 5px;
-}
-
 .login-button:hover {
     background-color: #7485d6;
 }
@@ -174,6 +166,7 @@ input.login-form-input {
     flex-direction: column;
     margin-bottom: 50px;
     align-items: center;
+    overflow-y: scroll;
 }
 
 .log-container {
